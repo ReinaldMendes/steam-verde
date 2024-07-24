@@ -6,8 +6,23 @@ const lerIndice = (mensagem) => parseInt(prompt(mensagem));
 const indiceInvalido = () => {
   return indice < 0 || indice >= jogos.length || isNaN(indice);
 };
+const listagem = () => {
+    let sequencia
+    if(jogo.sequencia !=-1){
+        sequencia = jogos[jogo.sequencia].nome
+    }else{
+        console.log("Não possui sequencia")
+    }
+    jogos.forEach((jogo, i) =>{
+      console.log(
+        `${i + 1} - ${jogo.nome} - ${jogo.ano} - ${jogo.duracao} - ${
+          jogo.preco
+        } - ${jogo.estudio} - ${jogos[jogo.sequencia].nome}`
+      )
+     });
+};
 const modelo = () => {
-  let jogo;
+  let jogo={};
 
   while (true) {
     jogo.nome = prompt("Qual é o nome do jogo? ");
@@ -60,11 +75,11 @@ const modelo = () => {
 
   while (true) {
     if (jogos.length == 0) {
-      jogo.sequencia = undefined;
+      jogo.sequencia = -1;
       break;
     }
-
-    jogo.sequencia = lerIndice("Qual é a sequencia do jogo? ");
+    
+    jogo.sequencia = lerIndice("Qual é a sequencia do jogo? Digite -1 caso não houver sequencia");
 
     // jogos.forEach((el, i) => {
     //     if(el.nome == jogo.sequencia) {
@@ -73,7 +88,7 @@ const modelo = () => {
     //     }
     // })
 
-    if (indiceInvalido(jogo.sequencia)) {
+    if ( jogo.sequencia != -1 && indiceInvalido(jogo.sequencia)) {
       console.log("A sequencia é invalida");
     } else {
       break;
@@ -90,15 +105,7 @@ const criar = () => {
   console.log("Jogo criado com sucesso");
 };
 
-const listagem = () => {
-  jogos.forEach((jogo, i) =>
-    console.log(
-      `${i + 1} - ${jogo.nome} - ${jogo.ano} - ${jogo.duracao} - ${
-        jogo.preco
-      } - ${jogo.estudio} - ${jogo.sequencia}`
-    )
-  );
-};
+
 const atualizar = () => {
   while (true) {
     if (jogos.length == 0) {
@@ -129,10 +136,9 @@ const remover = () => {
     }
   }
 };
-module.exports (
+module.exports = {
 criar,
 atualizar,
 listagem,
 remover,
-
-)
+};
